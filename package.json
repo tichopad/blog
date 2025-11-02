@@ -6,12 +6,18 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "check": "astro check"
   },
   "dependencies": {
+    "@astrojs/check": "0.9.5",
     "@astrojs/cloudflare": "^12.6.10",
     "@astrojs/rss": "4.0.13",
-    "astro": "^5.15.3"
+    "@tailwindcss/typography": "0.5.19",
+    "@tailwindcss/vite": "^4.1.16",
+    "astro": "^5.15.3",
+    "tailwindcss": "^4.1.16",
+    "typescript": "5.9.3"
   },
   "devDependencies": {
     "wrangler": "4.45.3"
