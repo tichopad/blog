@@ -1,2 +1,12 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+
+h1 {
+  font-family: var(--font-playfair);
+}
+
+body {
+  font-family: var(--font-garamond);
+  font-weight: 400;
+  font-size: 20px;
+}

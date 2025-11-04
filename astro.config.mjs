@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from "astro/config";
+import { defineConfig, fontProviders } from "astro/config";
 import cloudflare from "@astrojs/cloudflare";
 import tailwindcss from "@tailwindcss/vite";
 
@@ -9,5 +9,21 @@ export default defineConfig({
   adapter: cloudflare({ imageService: "compile" }),
   vite: {
     plugins: [tailwindcss()],
+  },
+  experimental: {
+    fonts: [
+      {
+        provider: fontProviders.google(),
+        name: "Playfair Display",
+        cssVariable: "--font-playfair",
+        weights: [600],
+      },
+      {
+        provider: fontProviders.google(),
+        name: "EB Garamond",
+        cssVariable: "--font-garamond",
+        weights: [400, 700],
+      },
+    ],
   },
 });
