@@ -2,13 +2,13 @@
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import "../styles/global.css";
-import { Font } from "astro:assets";
 
 interface Props {
   pageTitle: string;
+  description: string;
 }
 
-const { pageTitle } = Astro.props;
+const { pageTitle, description } = Astro.props;
 ---
 
 <!--
@@ -20,16 +20,47 @@ A base layout for most pages.
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+    <meta content={pageTitle} name="title" />
+    <meta content={description} name="description" />
+    <slot name="metas" />
     <title>{pageTitle}</title>
+    <slot name="preloads" />
+    <!-- Fonts -->
+    <link
+      as="font"
+      crossorigin
+      href="/fonts/playfair-display-variable.ttf"
+      rel="preload"
+      type="font/truetype"
+    />
+    <link
+      as="font"
+      crossorigin
+      href="/fonts/playfair-display-italic-variable.ttf"
+      rel="preload"
+      type="font/truetype"
+    />
+    <link
+      as="font"
+      crossorigin
+      href="/fonts/eb-garamond-variable.ttf"
+      rel="preload"
+      type="font/truetype"
+    />
+    <link
+      as="font"
+      crossorigin
+      href="/fonts/eb-garamond-italic-variable.ttf"
+      rel="preload"
+      type="font/truetype"
+    />
   </head>
   <body>
     <Header />
-    <h1 class="text-5xl">{pageTitle}</h1>
+    <h1 class="text-6xl">{pageTitle}</h1>
     <main>
       <slot />
     </main>
     <Footer />
   </body>
 </html>
-<Font cssVariable="--font-playfair" preload />
-<Font cssVariable="--font-garamond" preload />

@@ -26,7 +26,7 @@ const { posts } = Astro.props;
 <!--
 Page displaying posts for a specific tag.
 -->
-<BaseLayout pageTitle={tag}>
+<BaseLayout pageTitle={tag} description={`Posts tagged with ${tag}`}>
   <p>Posts tagged with {tag}</p>
   <ul>
     {

@@ -1,0 +1,47 @@
+/* Playfair Display */
+@font-face {
+  font-family: "Playfair Display";
+  src: url("/fonts/playfair-display-variable.ttf") format("truetype");
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Playfair Display";
+  src: url("/fonts/playfair-display-italic-variable.ttf") format("truetype");
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Playfair Display Fallback";
+  src: local(Times New Roman);
+  size-adjust: 81%;
+  ascent-override: 94%;
+  descent-override: 24%;
+  line-gap-override: normal;
+}
+
+/* EB Garamond */
+@font-face {
+  font-family: "EB Garamond";
+  src: url("/fonts/eb-garamond-variable.ttf") format("truetype");
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "EB Garamond";
+  src: url("/fonts/eb-garamond-italic-variable.ttf") format("truetype");
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "EB Garamond Fallback";
+  src: local(Georgia);
+  size-adjust: 85%;
+  ascent-override: 116%;
+  descent-override: 30%;
+  line-gap-override: normal;
+}

@@ -3,19 +3,24 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 
 const allPosts = await getCollection("blog");
-
-const pageTitle = "My Astro Learning Blog";
 ---
 
-<BaseLayout pageTitle={pageTitle}>
+<BaseLayout
+  pageTitle="My Astro Learning Blog"
+  description="Blog about learning Astro."
+>
   <p>This is where I will post about my journey learning Astro.</p>
-  <ul>
+  <section>
     {
       allPosts.map((post) => (
-        <li>
-          <a href={`/posts/${post.id}/`}>{post.data.title}</a>
-        </li>
+        <article class="py-3">
+          <time>{post.data.pubDate.toLocaleDateString()}</time>
+          <a href={`/posts/${post.id}/`}>
+            <h3 class="text-3xl">{post.data.title}</h3>
+          </a>
+          <p>{post.data.description}</p>
+        </article>
       ))
     }
-  </ul>
+  </section>
 </BaseLayout>

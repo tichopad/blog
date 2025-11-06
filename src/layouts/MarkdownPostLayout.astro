@@ -6,7 +6,7 @@ const { frontmatter } = Astro.props;
 <!--
 A layout for Markdown posts.
 -->
-<BaseLayout pageTitle={frontmatter.title}>
+<BaseLayout pageTitle={frontmatter.title} description={frontmatter.description}>
   <article class="prose lg:prose-xl">
     <p>{frontmatter.pubDate.toLocaleDateString()}</p>
     <p><em>{frontmatter.description}</em></p>

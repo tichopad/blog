@@ -2,7 +2,7 @@
 layout: ../../layouts/MarkdownPostLayout.astro
 title: My Fourth Blog Post
 author: Astro Learner
-description: "This post will show up on its own!"
+description: "This post will show up on its own! No frontmatter needed! Also, no layout needed!"
 image:
   url: "https://docs.astro.build/default-og-image.png"
   alt: "The word astro against an illustration of planets and stars."

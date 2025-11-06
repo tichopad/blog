@@ -1,12 +1,55 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+@import "./fonts.css";
+
+@layer base {
+  :root {
+    --font-playfair: "Playfair Display", serif, "Playfair Display Fallback",
+      system-ui;
+    --font-garamond: "EB Garamond", serif, "EB Garamond Fallback", system-ui;
+    --color-text-primary: #38322c;
+    --color-text-link: #844ad6;
+    --color-text-link-highlight: #a67edf;
+    --color-bg: #f8f4ea;
+  }
+}
+
+html {
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+}
+
+hr {
+  border: none;
+  border-top: 1px dashed var(--color-text-primary);
+  margin: 2rem 0;
+  max-width: 15%;
+  opacity: 0.5;
+}
 
 h1 {
   font-family: var(--font-playfair);
+  font-weight: 600;
+  padding: 1rem 0;
 }
 
 body {
   font-family: var(--font-garamond);
-  font-weight: 400;
-  font-size: 20px;
+  font-weight: 500;
+  font-size: 19px;
+  line-height: 1.7;
+  padding: 0 1rem;
+}
+
+a {
+  color: var(--color-text-link);
+  text-decoration: underline solid var(--color-text-link);
+  font-weight: 700;
+  transition: text-decoration 350ms ease, color 300ms ease;
+}
+
+a:focus,
+a:hover {
+  color: var(--color-text-link-highlight);
+  text-decoration-color: transparent;
 }

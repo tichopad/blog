@@ -1,7 +1,7 @@
 ---
 title: "My First Blog Post"
 pubDate: 2022-07-01
-description: "This is the first post of my new Astro blog."
+description: "This is the first post of my new Astro blog. I'm really excited to share my learning journey with you all!"
 author: "Astro Learner"
 image:
   url: "https://docs.astro.build/assets/rose.webp"
