@@ -12,14 +12,66 @@ const pageTitle = "Tag Index";
 Page displaying an index of all tags.
 -->
 <BaseLayout pageTitle={pageTitle} description="Index of all tags.">
-  <p>Index of all tags</p>
-  <ul>
+  <div class="tags-intro">
+    <p>Browse posts by topic</p>
+  </div>
+
+  <ul class="tags-list">
     {
       tags.map((tag) => (
-        <li>
-          <a href={`/tags/${tag}/`}>{tag}</a>
+        <li class="tag-item">
+          <a href={`/tags/${tag}/`} class="tag-link">
+            {tag}
+          </a>
         </li>
       ))
     }
   </ul>
 </BaseLayout>
+
+<style>
+  .tags-intro {
+    margin-bottom: 2rem;
+  }
+
+  .tags-intro p {
+    font-size: var(--font-size-base);
+    color: var(--color-brown-light);
+  }
+
+  .tags-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .tag-item {
+    display: inline-block;
+  }
+
+  .tag-link {
+    display: inline-block;
+    padding: 0.5rem 1.25rem;
+    background-color: var(--color-cream-dark);
+    color: var(--color-brown);
+    text-decoration: none;
+    border-radius: var(--radius-xl);
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    letter-spacing: var(--letter-spacing-wide);
+    transition: all 200ms ease;
+    border: 1px solid transparent;
+  }
+
+  .tag-link:hover {
+    background-color: var(--color-sage-light);
+    color: var(--color-brown);
+    border-color: var(--color-sage);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+  }
+</style>

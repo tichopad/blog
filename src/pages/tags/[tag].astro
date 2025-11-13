@@ -27,14 +27,92 @@ const { posts } = Astro.props;
 Page displaying posts for a specific tag.
 -->
 <BaseLayout pageTitle={tag} description={`Posts tagged with ${tag}`}>
-  <p>Posts tagged with {tag}</p>
-  <ul>
+  <div class="tag-intro">
+    <p>Posts tagged with <span class="tag-name">{tag}</span></p>
+  </div>
+
+  <ul class="posts-list">
     {
       posts.map((post) => (
-        <li>
-          <a href={`/posts/${post.id}/`}>{post.data.title}</a>
+        <li class="post-item">
+          <time class="post-date" datetime={post.data.pubDate.toISOString()}>
+            {post.data.pubDate.toLocaleDateString("en-US", {
+              day: "numeric",
+              month: "short",
+              year: "numeric",
+            })}
+          </time>
+          <a href={`/posts/${post.id}/`} class="post-title">
+            {post.data.title}
+          </a>
+          <p class="post-description">{post.data.description}</p>
         </li>
       ))
     }
   </ul>
 </BaseLayout>
+
+<style>
+  .tag-intro {
+    margin-bottom: 3rem;
+  }
+
+  .tag-intro p {
+    font-size: var(--font-size-lg);
+    color: var(--color-brown-light);
+  }
+
+  .tag-name {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background-color: var(--color-sage-light);
+    color: var(--color-brown);
+    border-radius: var(--radius-md);
+    font-family: var(--font-family-display);
+    font-weight: 600;
+    letter-spacing: var(--letter-spacing-wide);
+  }
+
+  .posts-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .post-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .post-date {
+    font-size: var(--font-size-sm);
+    color: var(--color-brown-lighter);
+    font-weight: 500;
+    letter-spacing: var(--letter-spacing-wide);
+  }
+
+  .post-title {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    line-height: var(--line-height-snug);
+    color: var(--color-brown);
+    text-decoration: none;
+    transition: color 200ms ease;
+  }
+
+  .post-title:hover {
+    color: var(--color-sage-dark);
+  }
+
+  .post-description {
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-normal);
+    color: var(--color-brown-light);
+    margin-top: 0.25rem;
+  }
+</style>

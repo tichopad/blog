@@ -1,26 +1,115 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import Ornament from "../components/Ornament.astro";
 import { getCollection } from "astro:content";
 
 const allPosts = await getCollection("blog");
+// Sort posts by date, newest first
+const sortedPosts = allPosts.sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
+);
 ---
 
-<BaseLayout
-  pageTitle="My Astro Learning Blog"
-  description="Blog about learning Astro."
->
-  <p>This is where I will post about my journey learning Astro.</p>
-  <section>
+<BaseLayout pageTitle="Posts" description="Blog about learning Astro.">
+  <div class="blog-intro">
+    <p>
+      Here you'll find various articles and topics that interest me. If you'd
+      like to be updated when new posts are released, there's a handy <a
+        href="/rss.xml">RSS feed</a
+      > to subscribe to.
+    </p>
+  </div>
+
+  <Ornament />
+
+  <ul class="blog-posts">
     {
-      allPosts.map((post) => (
-        <article class="py-3">
-          <time>{post.data.pubDate.toLocaleDateString()}</time>
-          <a href={`/posts/${post.id}/`}>
-            <h3 class="text-3xl">{post.data.title}</h3>
+      sortedPosts.map((post) => (
+        <li class="blog-post-item">
+          <time
+            class="blog-post-date"
+            datetime={post.data.pubDate.toISOString()}
+          >
+            {post.data.pubDate.toLocaleDateString("en-US", {
+              day: "numeric",
+              month: "short",
+              year: "numeric",
+            })}
+          </time>
+          <a href={`/posts/${post.id}/`} class="blog-post-title">
+            {post.data.title}
           </a>
-          <p>{post.data.description}</p>
-        </article>
+          <p class="blog-post-description">{post.data.description}</p>
+        </li>
       ))
     }
-  </section>
+  </ul>
 </BaseLayout>
+
+<style>
+  .blog-intro {
+    margin-bottom: 3rem;
+    max-width: 48rem;
+  }
+
+  .blog-intro p {
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-brown-light);
+  }
+
+  .blog-posts {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .blog-post-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    margin: -1.5rem;
+    border-radius: var(--radius-lg);
+    transition:
+      background-color 250ms ease,
+      transform 200ms ease;
+  }
+
+  .blog-post-item:hover {
+    background-color: var(--color-cream-dark);
+    transform: translateX(0.5rem);
+  }
+
+  .blog-post-date {
+    font-size: var(--font-size-sm);
+    color: var(--color-brown-lighter);
+    font-weight: 500;
+    letter-spacing: var(--letter-spacing-wide);
+  }
+
+  .blog-post-title {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    line-height: var(--line-height-snug);
+    color: var(--color-brown);
+    text-decoration: none;
+    transition: color 200ms ease;
+  }
+
+  .blog-post-title:hover {
+    color: var(--color-sage-dark);
+    text-decoration: none;
+  }
+
+  .blog-post-description {
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-normal);
+    color: var(--color-brown-light);
+    margin-top: 0.5rem;
+  }
+</style>

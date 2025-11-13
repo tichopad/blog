@@ -56,11 +56,42 @@ A base layout for most pages.
     />
   </head>
   <body>
-    <Header />
-    <h1 class="text-6xl">{pageTitle}</h1>
-    <main>
-      <slot />
-    </main>
-    <Footer />
+    <div class="page-container">
+      <Header />
+      <main class="main-content">
+        <h1>{pageTitle}</h1>
+        <slot />
+      </main>
+      <Footer />
+    </div>
   </body>
 </html>
+
+<style>
+  .page-container {
+    max-width: 80rem; /* 1280px */
+    margin: 0 auto;
+    padding: 0 5rem; /* 80px */
+  }
+
+  @media (max-width: 1024px) {
+    .page-container {
+      padding: 0 3rem; /* 48px on tablet */
+    }
+  }
+
+  @media (max-width: 768px) {
+    .page-container {
+      padding: 0 1.5rem; /* 24px on mobile */
+    }
+  }
+
+  .main-content {
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+  }
+
+  .main-content h1 {
+    margin-bottom: 2rem;
+  }
+</style>

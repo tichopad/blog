@@ -2,4 +2,51 @@
 
 ---
 
-<footer>Footer</footer>
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="/rss.xml">RSS</a>
+    <a href="mailto:hello@example.com">Mail</a>
+  </div>
+  <p class="footer-copyright">
+    Site and contents by <span class="footer-name">Your Name</span>.
+  </p>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: 6rem;
+    padding: 3rem 0;
+    border-top: 1px solid var(--color-cream-darker);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-links a {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-brown-light);
+    text-decoration: none;
+    letter-spacing: var(--letter-spacing-wide);
+    transition: color 200ms ease;
+  }
+
+  .footer-links a:hover {
+    color: var(--color-sage-dark);
+  }
+
+  .footer-copyright {
+    font-size: var(--font-size-sm);
+    color: var(--color-brown-lighter);
+    margin: 0;
+  }
+
+  .footer-name {
+    color: var(--color-brown-light);
+    font-weight: 600;
+  }
+</style>

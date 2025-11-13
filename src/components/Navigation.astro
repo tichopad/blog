@@ -2,8 +2,39 @@
 
 ---
 
-<nav>
+<nav class="main-nav">
   <a href="/">Home</a>
   <a href="/about/">About</a>
   <a href="/blog/">Blog</a>
 </nav>
+
+<style>
+  .main-nav {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .main-nav a {
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-xl);
+    font-weight: 400
+    color: var(--color-sage-dark);
+    text-decoration: none;
+    transition: color 300ms ease;
+  }
+
+  .main-nav a:hover {
+    color: var(--color-sage-light);
+  }
+
+  @media (max-width: 768px) {
+    .main-nav {
+      gap: 1.5rem;
+    }
+
+    .main-nav a {
+      font-size: var(--font-size-sm);
+    }
+  }
+</style>
