@@ -2,21 +2,23 @@
   "name": "@tichopad/blog",
   "type": "module",
   "version": "0.0.1",
+  "packageManager": "pnpm@10.22.0",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "wrangler dev",
     "astro": "astro",
-    "check": "astro check"
+    "check": "astro check",
+    "deploy": "wrangler deploy"
   },
   "dependencies": {
     "@astrojs/check": "0.9.5",
-    "@astrojs/cloudflare": "^12.6.10",
+    "@astrojs/cloudflare": "12.6.10",
     "@astrojs/rss": "4.0.13",
-    "astro": "^5.15.3",
+    "astro": "5.15.8",
     "typescript": "5.9.3"
   },
   "devDependencies": {
-    "wrangler": "4.45.3"
+    "wrangler": "4.47.0"
   }
 }
