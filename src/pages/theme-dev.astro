@@ -1,0 +1,1156 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Ornament from "../components/Ornament.astro";
+
+// Dev-only guard: return 404 in production
+if (!import.meta.env.DEV) {
+  return new Response(null, { status: 404 });
+}
+
+// Color variable data structure
+interface ColorVariable {
+  name: string;
+  cssVar: string;
+  hex: string;
+  description: string;
+}
+
+interface ColorFamily {
+  family: string;
+  colors: ColorVariable[];
+}
+
+// Typography variable data structures
+interface FontFamilyVariable {
+  name: string;
+  cssVar: string;
+  value: string;
+  description: string;
+}
+
+interface FontSizeVariable {
+  name: string;
+  cssVar: string;
+  rem: string;
+  px: string;
+}
+
+interface LineHeightVariable {
+  name: string;
+  cssVar: string;
+  value: string;
+}
+
+interface LetterSpacingVariable {
+  name: string;
+  cssVar: string;
+  value: string;
+}
+
+interface BorderRadiusVariable {
+  name: string;
+  cssVar: string;
+  rem: string;
+  px: string;
+}
+
+interface ShadowVariable {
+  name: string;
+  cssVar: string;
+  value: string;
+}
+
+// Hardcoded color variables (18 total)
+const colorFamilies: ColorFamily[] = [
+  {
+    family: "Cream",
+    colors: [
+      {
+        name: "Cream",
+        cssVar: "--color-cream",
+        hex: "#f8f4ea",
+        description: "Base cream color",
+      },
+      {
+        name: "Cream Dark",
+        cssVar: "--color-cream-dark",
+        hex: "#f0e8d8",
+        description: "Darker cream variant",
+      },
+      {
+        name: "Cream Darker",
+        cssVar: "--color-cream-darker",
+        hex: "#e8dcc8",
+        description: "Darkest cream variant",
+      },
+    ],
+  },
+  {
+    family: "Brown",
+    colors: [
+      {
+        name: "Brown",
+        cssVar: "--color-brown",
+        hex: "#38322c",
+        description: "Base brown color",
+      },
+      {
+        name: "Brown Light",
+        cssVar: "--color-brown-light",
+        hex: "#5a4f45",
+        description: "Lighter brown variant",
+      },
+      {
+        name: "Brown Lighter",
+        cssVar: "--color-brown-lighter",
+        hex: "#7a6d5f",
+        description: "Lightest brown variant",
+      },
+    ],
+  },
+  {
+    family: "Sage",
+    colors: [
+      {
+        name: "Sage",
+        cssVar: "--color-sage",
+        hex: "#7a9b76",
+        description: "Base sage color",
+      },
+      {
+        name: "Sage Light",
+        cssVar: "--color-sage-light",
+        hex: "#9bb897",
+        description: "Lighter sage variant",
+      },
+      {
+        name: "Sage Dark",
+        cssVar: "--color-sage-dark",
+        hex: "#5d7a5a",
+        description: "Darker sage variant",
+      },
+    ],
+  },
+  {
+    family: "Terracotta",
+    colors: [
+      {
+        name: "Terracotta",
+        cssVar: "--color-terracotta",
+        hex: "#c17a6f",
+        description: "Base terracotta color",
+      },
+      {
+        name: "Terracotta Light",
+        cssVar: "--color-terracotta-light",
+        hex: "#d49a91",
+        description: "Lighter terracotta variant",
+      },
+      {
+        name: "Terracotta Dark",
+        cssVar: "--color-terracotta-dark",
+        hex: "#a65f55",
+        description: "Darker terracotta variant",
+      },
+    ],
+  },
+  {
+    family: "Dusty Blue",
+    colors: [
+      {
+        name: "Dusty Blue",
+        cssVar: "--color-dusty-blue",
+        hex: "#7a8fa3",
+        description: "Base dusty blue color",
+      },
+      {
+        name: "Dusty Blue Light",
+        cssVar: "--color-dusty-blue-light",
+        hex: "#9baab9",
+        description: "Lighter dusty blue variant",
+      },
+      {
+        name: "Dusty Blue Dark",
+        cssVar: "--color-dusty-blue-dark",
+        hex: "#5d7088",
+        description: "Darker dusty blue variant",
+      },
+    ],
+  },
+  {
+    family: "Burgundy",
+    colors: [
+      {
+        name: "Burgundy",
+        cssVar: "--color-burgundy",
+        hex: "#8b5a5f",
+        description: "Base burgundy color",
+      },
+      {
+        name: "Burgundy Light",
+        cssVar: "--color-burgundy-light",
+        hex: "#a87a7f",
+        description: "Lighter burgundy variant",
+      },
+      {
+        name: "Burgundy Dark",
+        cssVar: "--color-burgundy-dark",
+        hex: "#6d4448",
+        description: "Darker burgundy variant",
+      },
+    ],
+  },
+];
+
+// Hardcoded font family variables (2 total)
+const fontFamilies: FontFamilyVariable[] = [
+  {
+    name: "Display",
+    cssVar: "--font-family-display",
+    value: "Playfair Display",
+    description: "For headers and display text",
+  },
+  {
+    name: "Body",
+    cssVar: "--font-family-body",
+    value: "EB Garamond",
+    description: "For body text and paragraphs",
+  },
+];
+
+// Hardcoded font size variables (9 total)
+const fontSizes: FontSizeVariable[] = [
+  { name: "XS", cssVar: "--font-size-xs", rem: "0.875rem", px: "14px" },
+  { name: "SM", cssVar: "--font-size-sm", rem: "1rem", px: "16px" },
+  { name: "Base", cssVar: "--font-size-base", rem: "1.1875rem", px: "19px" },
+  { name: "LG", cssVar: "--font-size-lg", rem: "1.375rem", px: "22px" },
+  { name: "XL", cssVar: "--font-size-xl", rem: "1.625rem", px: "26px" },
+  { name: "2XL", cssVar: "--font-size-2xl", rem: "2rem", px: "32px" },
+  { name: "3XL", cssVar: "--font-size-3xl", rem: "2.5rem", px: "40px" },
+  { name: "4XL", cssVar: "--font-size-4xl", rem: "3rem", px: "48px" },
+  { name: "5XL", cssVar: "--font-size-5xl", rem: "3.75rem", px: "60px" },
+];
+
+// Hardcoded line height variables (5 total)
+const lineHeights: LineHeightVariable[] = [
+  { name: "Tight", cssVar: "--line-height-tight", value: "1.3" },
+  { name: "Snug", cssVar: "--line-height-snug", value: "1.5" },
+  { name: "Normal", cssVar: "--line-height-normal", value: "1.7" },
+  { name: "Relaxed", cssVar: "--line-height-relaxed", value: "1.9" },
+  { name: "Loose", cssVar: "--line-height-loose", value: "2.1" },
+];
+
+// Hardcoded letter spacing variables (4 total)
+const letterSpacings: LetterSpacingVariable[] = [
+  { name: "Tight", cssVar: "--letter-spacing-tight", value: "-0.02em" },
+  { name: "Normal", cssVar: "--letter-spacing-normal", value: "0" },
+  { name: "Wide", cssVar: "--letter-spacing-wide", value: "0.02em" },
+  { name: "Wider", cssVar: "--letter-spacing-wider", value: "0.05em" },
+];
+
+// Hardcoded border radius variables (4 total)
+const borderRadii: BorderRadiusVariable[] = [
+  { name: "SM", cssVar: "--radius-sm", rem: "0.25rem", px: "4px" },
+  { name: "MD", cssVar: "--radius-md", rem: "0.375rem", px: "6px" },
+  { name: "LG", cssVar: "--radius-lg", rem: "0.5rem", px: "8px" },
+  { name: "XL", cssVar: "--radius-xl", rem: "0.75rem", px: "12px" },
+];
+
+// Hardcoded shadow variables (3 total)
+const shadows: ShadowVariable[] = [
+  {
+    name: "SM",
+    cssVar: "--shadow-sm",
+    value: "0 1px 2px 0 rgb(56 50 44 / 0.05)",
+  },
+  {
+    name: "MD",
+    cssVar: "--shadow-md",
+    value:
+      "0 4px 6px -1px rgb(56 50 44 / 0.08), 0 2px 4px -2px rgb(56 50 44 / 0.05)",
+  },
+  {
+    name: "LG",
+    cssVar: "--shadow-lg",
+    value:
+      "0 10px 15px -3px rgb(56 50 44 / 0.08), 0 4px 6px -4px rgb(56 50 44 / 0.05)",
+  },
+];
+---
+
+<BaseLayout
+  pageTitle="Theme Explorer"
+  description="Development-only page displaying all CSS custom properties and theme variables"
+>
+  <div class="theme-explorer">
+    <div class="header-section">
+      <p class="intro">
+        This page displays all CSS custom properties (theme variables) defined
+        in the project. Use this reference to understand and apply the theme
+        system consistently across the application.
+      </p>
+
+      <div class="notice">
+        <strong>Note:</strong> This page is only available in development mode and
+        will return a 404 error in production.
+      </div>
+
+      <div class="doc-link">
+        &#128214; For detailed usage patterns and examples, see <a
+          href="/THEME.md"
+          target="_blank"
+          rel="noopener noreferrer">THEME.md</a
+        >
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <nav class="toc" aria-label="Table of contents">
+      <h2 class="toc-title">Quick Navigation</h2>
+      <ul class="toc-list">
+        <li><a href="#colors">Color Palette (18)</a></li>
+        <li><a href="#typography">Typography (20)</a></li>
+        <li><a href="#layout">Layout Variables (7)</a></li>
+        <li><a href="#usage">Usage Examples</a></li>
+      </ul>
+    </nav>
+
+    <Ornament />
+
+    <!-- Color Palette Section -->
+    <section class="section" id="colors">
+      <h2 class="section-title">Color Palette</h2>
+      <p class="section-description">
+        18 color variables organized into 6 families. Each family includes base,
+        light, and dark variants for flexible theming.
+      </p>
+
+      {
+        colorFamilies.map((family) => (
+          <div class="color-family">
+            <h3 class="family-title">{family.family}</h3>
+            <div class="color-grid">
+              {family.colors.map((color) => (
+                <div class="color-item">
+                  <div
+                    class="color-swatch"
+                    style={`background-color: ${color.hex};`}
+                  />
+                  <div class="color-info">
+                    <div class="var-with-copy">
+                      <code class="color-var">{color.cssVar}</code>
+                      <button
+                        class="copy-btn"
+                        data-copy={color.cssVar}
+                        aria-label="Copy variable name"
+                        title="Copy variable name"
+                      >
+                        &#128203;
+                      </button>
+                    </div>
+                    <span class="color-hex">{color.hex}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </section>
+
+    <Ornament />
+
+    <!-- Typography Section -->
+    <section class="section" id="typography">
+      <h2 class="section-title">Typography</h2>
+      <p class="section-description">
+        20 typography variables including font families, sizes, line heights,
+        and letter spacing for consistent text styling.
+      </p>
+
+      <!-- Font Families -->
+      <div class="subsection">
+        <h3 class="subsection-title">Font Families (2)</h3>
+        <div class="font-family-grid">
+          {
+            fontFamilies.map((font) => (
+              <div class="font-family-item">
+                <div
+                  class="font-sample"
+                  style={`font-family: var(${font.cssVar});`}
+                >
+                  The quick brown fox jumps over the lazy dog
+                </div>
+                <div class="font-info">
+                  <code class="var-name">{font.cssVar}</code>
+                  <span class="var-value">{font.value}</span>
+                  <span class="var-description">{font.description}</span>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- Font Sizes -->
+      <div class="subsection">
+        <h3 class="subsection-title">Font Sizes (9)</h3>
+        <div class="font-size-grid">
+          {
+            fontSizes.map((size) => (
+              <div class="font-size-item">
+                <div
+                  class="size-sample"
+                  style={`font-size: var(${size.cssVar});`}
+                >
+                  Aa
+                </div>
+                <div class="size-info">
+                  <code class="var-name">{size.cssVar}</code>
+                  <span class="var-value">
+                    {size.rem} ({size.px})
+                  </span>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- Line Heights -->
+      <div class="subsection">
+        <h3 class="subsection-title">Line Heights (5)</h3>
+        <div class="line-height-grid">
+          {
+            lineHeights.map((lh) => (
+              <div class="line-height-item">
+                <div
+                  class="lh-sample"
+                  style={`line-height: var(${lh.cssVar});`}
+                >
+                  Typography is the art and technique of arranging type to make
+                  written language legible, readable, and appealing when
+                  displayed.
+                </div>
+                <div class="lh-info">
+                  <code class="var-name">{lh.cssVar}</code>
+                  <span class="var-value">{lh.value}</span>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- Letter Spacing -->
+      <div class="subsection">
+        <h3 class="subsection-title">Letter Spacing (4)</h3>
+        <div class="letter-spacing-grid">
+          {
+            letterSpacings.map((ls) => (
+              <div class="letter-spacing-item">
+                <div
+                  class="ls-sample"
+                  style={`letter-spacing: var(${ls.cssVar});`}
+                >
+                  LETTER SPACING EXAMPLE
+                </div>
+                <div class="ls-info">
+                  <code class="var-name">{ls.cssVar}</code>
+                  <span class="var-value">{ls.value}</span>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <Ornament />
+
+    <!-- Layout Variables Section -->
+    <section class="section" id="layout">
+      <h2 class="section-title">Layout Variables</h2>
+      <p class="section-description">
+        7 layout variables including border radius and shadows for consistent
+        visual styling and depth.
+      </p>
+
+      <!-- Border Radius -->
+      <div class="subsection">
+        <h3 class="subsection-title">Border Radius (4)</h3>
+        <div class="border-radius-grid">
+          {
+            borderRadii.map((radius) => (
+              <div class="border-radius-item">
+                <div
+                  class="radius-demo"
+                  style={`border-radius: var(${radius.cssVar});`}
+                />
+                <div class="radius-info">
+                  <code class="var-name">{radius.cssVar}</code>
+                  <span class="var-value">
+                    {radius.rem} ({radius.px})
+                  </span>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- Shadows -->
+      <div class="subsection">
+        <h3 class="subsection-title">Shadows (3)</h3>
+        <div class="shadow-grid">
+          {
+            shadows.map((shadow) => (
+              <div class="shadow-item">
+                <div
+                  class="shadow-demo"
+                  style={`box-shadow: var(${shadow.cssVar});`}
+                />
+                <div class="shadow-info">
+                  <code class="var-name">{shadow.cssVar}</code>
+                  <span class="var-value-shadow">{shadow.value}</span>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <Ornament />
+
+    <!-- Usage Examples Section -->
+    <section class="section" id="usage">
+      <h2 class="section-title">Usage Examples</h2>
+      <p class="section-description">
+        Common patterns and code snippets for using theme variables effectively.
+      </p>
+
+      <div class="usage-grid">
+        <div class="usage-example">
+          <h3 class="usage-title">Colored Headings</h3>
+          <pre><code>{`h1 {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-4xl);
+  color: var(--color-brown);
+  letter-spacing: var(--letter-spacing-tight);
+}`}</code></pre>
+        </div>
+
+        <div class="usage-example">
+          <h3 class="usage-title">Card Component</h3>
+          <pre><code>{`.card {
+  background: var(--color-cream);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 2rem;
+}`}</code></pre>
+        </div>
+
+        <div class="usage-example">
+          <h3 class="usage-title">Body Text</h3>
+          <pre><code>{`p {
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-brown-light);
+}`}</code></pre>
+        </div>
+
+        <div class="usage-example">
+          <h3 class="usage-title">Accent Button</h3>
+          <pre><code>{`.btn-accent {
+  background: var(--color-sage);
+  color: var(--color-cream);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}`}</code></pre>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Copy to clipboard script -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const copyButtons = document.querySelectorAll(".copy-btn");
+
+      copyButtons.forEach((button) => {
+        button.addEventListener("click", async () => {
+          const textToCopy = button.getAttribute("data-copy");
+          if (!textToCopy) return;
+
+          try {
+            await navigator.clipboard.writeText(textToCopy);
+
+            // Visual feedback
+            const originalText = button.textContent;
+            button.textContent = "✓";
+            button.classList.add("copied");
+
+            setTimeout(() => {
+              button.textContent = originalText;
+              button.classList.remove("copied");
+            }, 2000);
+          } catch (err) {
+            console.error("Failed to copy:", err);
+            button.textContent = "✗";
+            setTimeout(() => {
+              button.textContent = "📋";
+            }, 2000);
+          }
+        });
+      });
+    });
+  </script>
+</BaseLayout>
+
+<style>
+  .theme-explorer {
+    max-width: 60rem;
+  }
+
+  .header-section {
+    margin-bottom: 2rem;
+  }
+
+  .intro {
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-relaxed);
+    margin-bottom: 1.5rem;
+    color: var(--color-brown-light);
+  }
+
+  .notice {
+    background-color: var(--color-cream-dark);
+    border-left: 4px solid var(--color-sage);
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: var(--radius-md);
+  }
+
+  .notice strong {
+    color: var(--color-brown);
+  }
+
+  .doc-link {
+    background-color: var(--color-sage-light);
+    color: var(--color-brown);
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius-md);
+    text-align: center;
+    font-size: var(--font-size-base);
+  }
+
+  .doc-link a {
+    color: var(--color-brown);
+    text-decoration: underline;
+    font-weight: 600;
+  }
+
+  .doc-link a:hover {
+    color: var(--color-sage-dark);
+  }
+
+  /* Table of Contents */
+  .toc {
+    background-color: var(--color-cream-dark);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 2rem;
+    margin: 2rem 0;
+    border: 1px solid var(--color-brown-lighter);
+  }
+
+  .toc-title {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-xl);
+    color: var(--color-brown);
+    margin-bottom: 1rem;
+    letter-spacing: var(--letter-spacing-normal);
+  }
+
+  .toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .toc-list li {
+    margin: 0;
+  }
+
+  .toc-list a {
+    display: block;
+    padding: 0.75rem 1rem;
+    background-color: var(--color-cream);
+    color: var(--color-brown);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    transition:
+      background-color 0.2s ease,
+      transform 0.2s ease;
+    font-size: var(--font-size-base);
+  }
+
+  .toc-list a:hover,
+  .toc-list a:focus {
+    background-color: var(--color-sage-light);
+    transform: translateX(4px);
+    outline: 2px solid var(--color-sage);
+    outline-offset: 2px;
+  }
+
+  /* Copy Button */
+  .var-with-copy {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .copy-btn {
+    background: transparent;
+    border: 1px solid var(--color-brown-lighter);
+    border-radius: var(--radius-sm);
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+    font-size: var(--font-size-sm);
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.1s ease;
+    line-height: 1;
+  }
+
+  .copy-btn:hover {
+    background-color: var(--color-cream-dark);
+    border-color: var(--color-sage);
+  }
+
+  .copy-btn:active {
+    transform: scale(0.95);
+  }
+
+  .copy-btn:focus {
+    outline: 2px solid var(--color-sage);
+    outline-offset: 2px;
+  }
+
+  .copy-btn.copied {
+    background-color: var(--color-sage-light);
+    border-color: var(--color-sage);
+    color: var(--color-sage-dark);
+  }
+
+  /* Section Styles */
+  .section {
+    margin-bottom: 4rem;
+  }
+
+  .section-title {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-3xl);
+    color: var(--color-brown);
+    margin-bottom: 0.5rem;
+    letter-spacing: var(--letter-spacing-tight);
+  }
+
+  .section-description {
+    font-size: var(--font-size-base);
+    color: var(--color-brown-light);
+    margin-bottom: 2rem;
+    line-height: var(--line-height-relaxed);
+  }
+
+  /* Color Family Styles */
+  .color-family {
+    margin-bottom: 2.5rem;
+  }
+
+  .family-title {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-xl);
+    color: var(--color-brown);
+    margin-bottom: 1rem;
+    letter-spacing: var(--letter-spacing-normal);
+  }
+
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .color-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .color-swatch {
+    height: 80px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-brown-lighter);
+    box-shadow: var(--shadow-sm);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .color-swatch:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .color-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .color-var {
+    font-family: "Courier New", monospace;
+    font-size: var(--font-size-sm);
+    color: var(--color-brown);
+    font-weight: 600;
+  }
+
+  .color-hex {
+    font-family: "Courier New", monospace;
+    font-size: var(--font-size-xs);
+    color: var(--color-brown-light);
+    text-transform: uppercase;
+  }
+
+  /* Typography Section Styles */
+  .subsection {
+    margin-bottom: 3rem;
+  }
+
+  .subsection-title {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-lg);
+    color: var(--color-brown);
+    margin-bottom: 1.5rem;
+    letter-spacing: var(--letter-spacing-normal);
+  }
+
+  /* Font Family Styles */
+  .font-family-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .font-family-item {
+    border: 1px solid var(--color-brown-lighter);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    background-color: var(--color-cream-dark);
+  }
+
+  .font-sample {
+    font-size: var(--font-size-2xl);
+    color: var(--color-brown);
+    margin-bottom: 1rem;
+    line-height: var(--line-height-snug);
+  }
+
+  .font-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .var-name {
+    font-family: "Courier New", monospace;
+    font-size: var(--font-size-sm);
+    color: var(--color-brown);
+    font-weight: 600;
+  }
+
+  .var-value {
+    font-family: "Courier New", monospace;
+    font-size: var(--font-size-xs);
+    color: var(--color-brown-light);
+  }
+
+  .var-description {
+    font-size: var(--font-size-xs);
+    color: var(--color-brown-light);
+    font-style: italic;
+  }
+
+  /* Font Size Styles */
+  .font-size-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+
+  .font-size-item {
+    border: 1px solid var(--color-brown-lighter);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    background-color: var(--color-cream-dark);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .size-sample {
+    font-family: var(--font-family-display);
+    color: var(--color-brown);
+    line-height: 1;
+  }
+
+  .size-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    text-align: center;
+  }
+
+  /* Line Height Styles */
+  .line-height-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .line-height-item {
+    border: 1px solid var(--color-brown-lighter);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    background-color: var(--color-cream-dark);
+  }
+
+  .lh-sample {
+    font-size: var(--font-size-base);
+    color: var(--color-brown);
+    margin-bottom: 1rem;
+    border-left: 3px solid var(--color-sage);
+    padding-left: 1rem;
+  }
+
+  .lh-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  /* Letter Spacing Styles */
+  .letter-spacing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+
+  .letter-spacing-item {
+    border: 1px solid var(--color-brown-lighter);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    background-color: var(--color-cream-dark);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .ls-sample {
+    font-size: var(--font-size-lg);
+    font-family: var(--font-family-display);
+    color: var(--color-brown);
+    text-align: center;
+  }
+
+  .ls-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    text-align: center;
+  }
+
+  /* Border Radius Styles */
+  .border-radius-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .border-radius-item {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .radius-demo {
+    width: 120px;
+    height: 120px;
+    background-color: var(--color-sage);
+    border: 2px solid var(--color-sage-dark);
+  }
+
+  .radius-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    text-align: center;
+  }
+
+  /* Shadow Styles */
+  .shadow-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+
+  .shadow-item {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .shadow-demo {
+    width: 100%;
+    height: 120px;
+    background-color: var(--color-cream);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .shadow-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .var-value-shadow {
+    font-family: "Courier New", monospace;
+    font-size: var(--font-size-xs);
+    color: var(--color-brown-light);
+    word-break: break-all;
+  }
+
+  /* Usage Examples Section */
+  .usage-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .usage-example {
+    background-color: var(--color-cream-dark);
+    border: 1px solid var(--color-brown-lighter);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+  }
+
+  .usage-title {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-lg);
+    color: var(--color-brown);
+    margin-bottom: 1rem;
+    letter-spacing: var(--letter-spacing-normal);
+  }
+
+  .usage-example pre {
+    background-color: var(--color-brown);
+    color: var(--color-cream);
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+    margin: 0;
+  }
+
+  .usage-example code {
+    font-family: "Courier New", monospace;
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-relaxed);
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .theme-explorer {
+      padding: 0 1rem;
+    }
+
+    .toc-list {
+      grid-template-columns: 1fr;
+    }
+
+    .color-grid {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+
+    .font-size-grid {
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+
+    .letter-spacing-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .border-radius-grid {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+
+    .shadow-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .usage-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .section-title {
+      font-size: var(--font-size-2xl);
+    }
+
+    .intro {
+      font-size: var(--font-size-base);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .color-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .font-size-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .border-radius-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .section-title {
+      font-size: var(--font-size-xl);
+    }
+
+    .subsection-title {
+      font-size: var(--font-size-base);
+    }
+  }
+
+  /* Smooth scrolling for anchor links */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Focus visible for accessibility */
+  *:focus-visible {
+    outline: 2px solid var(--color-sage);
+    outline-offset: 2px;
+  }
+</style>
