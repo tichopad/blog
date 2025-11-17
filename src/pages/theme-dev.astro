@@ -60,7 +60,7 @@ interface ShadowVariable {
   value: string;
 }
 
-// Hardcoded color variables (18 total)
+// Hardcoded color variables (27 total)
 const colorFamilies: ColorFamily[] = [
   {
     family: "Cream",
@@ -109,25 +109,94 @@ const colorFamilies: ColorFamily[] = [
     ],
   },
   {
-    family: "Sage",
+    family: "Autumn Orange",
     colors: [
       {
-        name: "Sage",
-        cssVar: "--color-sage",
-        hex: "#7a9b76",
-        description: "Base sage color",
+        name: "Autumn Orange",
+        cssVar: "--color-autumn-orange",
+        hex: "#ea580c",
+        description: "Base autumn orange color",
       },
       {
-        name: "Sage Light",
-        cssVar: "--color-sage-light",
-        hex: "#9bb897",
-        description: "Lighter sage variant",
+        name: "Autumn Orange Light",
+        cssVar: "--color-autumn-orange-light",
+        hex: "#fed7aa",
+        description: "Lighter autumn orange variant",
       },
       {
-        name: "Sage Dark",
-        cssVar: "--color-sage-dark",
-        hex: "#5d7a5a",
-        description: "Darker sage variant",
+        name: "Autumn Orange Dark",
+        cssVar: "--color-autumn-orange-dark",
+        hex: "#c2410c",
+        description: "Darker autumn orange variant",
+      },
+    ],
+  },
+  {
+    family: "Golden",
+    colors: [
+      {
+        name: "Golden",
+        cssVar: "--color-golden",
+        hex: "#eab308",
+        description: "Base golden color",
+      },
+      {
+        name: "Golden Light",
+        cssVar: "--color-golden-light",
+        hex: "#fef3c7",
+        description: "Lighter golden variant",
+      },
+      {
+        name: "Golden Dark",
+        cssVar: "--color-golden-dark",
+        hex: "#92400e",
+        description: "Darker golden variant",
+      },
+    ],
+  },
+  {
+    family: "Warm Red",
+    colors: [
+      {
+        name: "Warm Red",
+        cssVar: "--color-warm-red",
+        hex: "#dc2626",
+        description: "Base warm red color",
+      },
+      {
+        name: "Warm Red Light",
+        cssVar: "--color-warm-red-light",
+        hex: "#fecaca",
+        description: "Lighter warm red variant",
+      },
+      {
+        name: "Warm Red Dark",
+        cssVar: "--color-warm-red-dark",
+        hex: "#b91c1c",
+        description: "Darker warm red variant",
+      },
+    ],
+  },
+  {
+    family: "Lavender",
+    colors: [
+      {
+        name: "Lavender",
+        cssVar: "--color-lavender",
+        hex: "#a78bfa",
+        description: "Base lavender color",
+      },
+      {
+        name: "Lavender Light",
+        cssVar: "--color-lavender-light",
+        hex: "#ede9fe",
+        description: "Lighter lavender variant",
+      },
+      {
+        name: "Lavender Dark",
+        cssVar: "--color-lavender-dark",
+        hex: "#7c3aed",
+        description: "Darker lavender variant",
       },
     ],
   },
@@ -308,7 +377,7 @@ const shadows: ShadowVariable[] = [
     <nav class="toc" aria-label="Table of contents">
       <h2 class="toc-title">Quick Navigation</h2>
       <ul class="toc-list">
-        <li><a href="#colors">Color Palette (18)</a></li>
+        <li><a href="#colors">Color Palette (27)</a></li>
         <li><a href="#typography">Typography (20)</a></li>
         <li><a href="#layout">Layout Variables (7)</a></li>
         <li><a href="#usage">Usage Examples</a></li>
@@ -321,7 +390,7 @@ const shadows: ShadowVariable[] = [
     <section class="section" id="colors">
       <h2 class="section-title">Color Palette</h2>
       <p class="section-description">
-        18 color variables organized into 6 families. Each family includes base,
+        27 color variables organized into 9 families. Each family includes base,
         light, and dark variants for flexible theming.
       </p>
 
@@ -564,7 +633,7 @@ const shadows: ShadowVariable[] = [
         <div class="usage-example">
           <h3 class="usage-title">Accent Button</h3>
           <pre><code>{`.btn-accent {
-  background: var(--color-sage);
+  background: var(--color-autumn-orange);
   color: var(--color-cream);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
@@ -627,7 +696,7 @@ const shadows: ShadowVariable[] = [
 
   .notice {
     background-color: var(--color-cream-dark);
-    border-left: 4px solid var(--color-sage);
+    border-left: 4px solid var(--color-autumn-orange);
     padding: 1rem 1.5rem;
     margin-bottom: 1.5rem;
     border-radius: var(--radius-md);
@@ -638,7 +707,7 @@ const shadows: ShadowVariable[] = [
   }
 
   .doc-link {
-    background-color: var(--color-sage-light);
+    background-color: var(--color-autumn-orange-light);
     color: var(--color-brown);
     padding: 1rem 1.5rem;
     border-radius: var(--radius-md);
@@ -653,7 +722,7 @@ const shadows: ShadowVariable[] = [
   }
 
   .doc-link a:hover {
-    color: var(--color-sage-dark);
+    color: var(--color-autumn-orange-dark);
   }
 
   /* Table of Contents */
@@ -701,9 +770,9 @@ const shadows: ShadowVariable[] = [
 
   .toc-list a:hover,
   .toc-list a:focus {
-    background-color: var(--color-sage-light);
+    background-color: var(--color-autumn-orange-light);
     transform: translateX(4px);
-    outline: 2px solid var(--color-sage);
+    outline: 2px solid var(--color-autumn-orange);
     outline-offset: 2px;
   }
 
@@ -730,7 +799,7 @@ const shadows: ShadowVariable[] = [
 
   .copy-btn:hover {
     background-color: var(--color-cream-dark);
-    border-color: var(--color-sage);
+    border-color: var(--color-autumn-orange);
   }
 
   .copy-btn:active {
@@ -738,14 +807,14 @@ const shadows: ShadowVariable[] = [
   }
 
   .copy-btn:focus {
-    outline: 2px solid var(--color-sage);
+    outline: 2px solid var(--color-autumn-orange);
     outline-offset: 2px;
   }
 
   .copy-btn.copied {
-    background-color: var(--color-sage-light);
-    border-color: var(--color-sage);
-    color: var(--color-sage-dark);
+    background-color: var(--color-autumn-orange-light);
+    border-color: var(--color-autumn-orange);
+    color: var(--color-autumn-orange-dark);
   }
 
   /* Section Styles */
@@ -936,7 +1005,7 @@ const shadows: ShadowVariable[] = [
     font-size: var(--font-size-base);
     color: var(--color-brown);
     margin-bottom: 1rem;
-    border-left: 3px solid var(--color-sage);
+    border-left: 3px solid var(--color-autumn-orange);
     padding-left: 1rem;
   }
 
@@ -994,8 +1063,8 @@ const shadows: ShadowVariable[] = [
   .radius-demo {
     width: 120px;
     height: 120px;
-    background-color: var(--color-sage);
-    border: 2px solid var(--color-sage-dark);
+    background-color: var(--color-autumn-orange);
+    border: 2px solid var(--color-autumn-orange-dark);
   }
 
   .radius-info {
@@ -1150,7 +1219,7 @@ const shadows: ShadowVariable[] = [
 
   /* Focus visible for accessibility */
   *:focus-visible {
-    outline: 2px solid var(--color-sage);
+    outline: 2px solid var(--color-autumn-orange);
     outline-offset: 2px;
   }
 </style>

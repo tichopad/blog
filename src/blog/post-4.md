@@ -1,5 +1,4 @@
 ---
-layout: ../../layouts/MarkdownPostLayout.astro
 title: My Fourth Blog Post
 author: Astro Learner
 description: "This post will show up on its own! No frontmatter needed! Also, no layout needed!"
@@ -11,3 +10,5 @@ tags: ["astro", "successes"]
 ---
 
 This post should show up with my other blog posts, because `import.meta.glob()` is returning a list of all my posts in order to create my list.
+
+> Here's a blockquote to test the border color. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi.

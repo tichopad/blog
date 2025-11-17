@@ -91,14 +91,38 @@ Generous line heights for comfortable reading:
 --color-brown-lighter: #7a6d5f  /* Tertiary text */
 ```
 
-### Accent Colors (Muted & Earthy)
+### Accent Colors (Warm & Autumnal)
 
-**Sage Green** (Default for links)
+**Autumn Orange** (Primary accent for links)
 
 ```css
---color-sage: #7a9b76
---color-sage-light: #9bb897
---color-sage-dark: #5d7a5a      /* Used for links */
+--color-autumn-orange: #ea580c
+--color-autumn-orange-light: #fed7aa
+--color-autumn-orange-dark: #c2410c  /* Used for links */
+```
+
+**Golden Yellow**
+
+```css
+--color-golden: #eab308
+--color-golden-light: #fef3c7
+--color-golden-dark: #92400e
+```
+
+**Warm Red**
+
+```css
+--color-warm-red: #dc2626
+--color-warm-red-light: #fecaca
+--color-warm-red-dark: #b91c1c
+```
+
+**Muted Lavender**
+
+```css
+--color-lavender: #a78bfa
+--color-lavender-light: #ede9fe
+--color-lavender-dark: #7c3aed
 ```
 
 **Terracotta**
@@ -128,7 +152,7 @@ Generous line heights for comfortable reading:
 **Usage:**
 
 ```css
-color: var(--color-sage-dark);
+color: var(--color-autumn-orange-dark);
 background-color: var(--color-cream);
 border-color: var(--color-terracotta);
 ```
@@ -164,11 +188,11 @@ box-shadow: var(--shadow-md);
 
 ## Example Usage Patterns
 
-### Custom Button with Sage Accent
+### Custom Button with Autumn Orange Accent
 
 ```css
-.button-sage {
-  background-color: var(--color-sage);
+.button-autumn {
+  background-color: var(--color-autumn-orange);
   color: var(--color-cream);
   padding: 0.75rem 1.5rem;
   border-radius: var(--radius-md);
@@ -178,8 +202,8 @@ box-shadow: var(--shadow-md);
   transition: all 200ms ease;
 }
 
-.button-sage:hover {
-  background-color: var(--color-sage-dark);
+.button-autumn:hover {
+  background-color: var(--color-autumn-orange-dark);
   box-shadow: var(--shadow-md);
 }
 ```
@@ -224,10 +248,13 @@ box-shadow: var(--shadow-md);
 1. **Stick to the palette**: Use the predefined colors to maintain consistency
 2. **Embrace whitespace**: The generous line heights and spacing are intentional
 3. **Mix accent colors thoughtfully**: Each accent color has a purpose:
-   - Sage: Links, nature-related content
-   - Terracotta: Warm highlights, important callouts
+   - Autumn Orange: Primary links, main interactive elements
+   - Golden Yellow: Highlights, special emphasis
+   - Warm Red: Important callouts, warnings
+   - Muted Lavender: Cool balance, secondary accents
+   - Terracotta: Warm highlights, decorative elements
    - Dusty Blue: Cool accents, technical content
-   - Burgundy: Emphasis, warnings
+   - Burgundy: Subtle emphasis
 4. **Use display font sparingly**: Playfair Display is for headers and special emphasis
 5. **Maintain readability**: Keep body text at the base size (19px) with normal line height (1.7)
 
