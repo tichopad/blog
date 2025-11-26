@@ -1,52 +1,142 @@
 ---
-
+import { Icon } from "astro-icon/components";
 ---
 
 <footer class="site-footer">
-  <div class="footer-links">
-    <a href="/rss.xml">RSS</a>
-    <a href="mailto:hello@example.com">Mail</a>
+  <div class="footer-content">
+    <div class="footer-links">
+      <a href="/rss.xml">RSS</a>
+      <a href="mailto:hello@example.com">Mail</a>
+    </div>
+    <button
+      id="theme-toggle"
+      type="button"
+      aria-label="Toggle theme"
+      class="theme-toggle"
+    >
+      <Icon name="lucide:sun" class="theme-icon theme-icon-light" />
+      <Icon name="lucide:moon" class="theme-icon theme-icon-dark" />
+    </button>
   </div>
   <p class="footer-copyright">
     Site and contents by <span class="footer-name">Your Name</span>.
   </p>
 </footer>
 
+<script>
+  const button = document.getElementById("theme-toggle");
+
+  if (button) {
+    button.addEventListener("click", () => {
+      const html = document.documentElement;
+      const currentTheme = html.getAttribute("data-theme");
+      const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+      html.setAttribute("data-theme", newTheme);
+      localStorage.setItem("color-scheme", newTheme);
+    });
+  }
+</script>
+
 <style>
   .site-footer {
     margin-top: 6rem;
     padding: 3rem 0;
-    border-top: 1px solid var(--color-cream-darker);
+    border-top: 1px solid var(--color-bg-subtler);
+  }
+
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
   }
 
   .footer-links {
     display: flex;
     gap: 2rem;
-    margin-bottom: 1.5rem;
   }
 
   .footer-links a {
     font-family: var(--font-family-display);
     font-size: var(--font-size-sm);
     font-weight: 600;
-    color: var(--color-brown-light);
+    color: var(--color-text-muted);
     text-decoration: none;
     letter-spacing: var(--letter-spacing-wide);
     transition: color 200ms ease;
   }
 
   .footer-links a:hover {
-    color: var(--color-autumn-orange-dark);
+    color: var(--color-link);
+  }
+
+  .theme-toggle {
+    background: none;
+    border: 1px solid var(--color-bg-subtler);
+    border-radius: var(--radius-md);
+    padding: 0.5rem;
+    cursor: pointer;
+    color: var(--color-text-muted);
+    transition: all 200ms ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .theme-toggle:hover {
+    color: var(--color-link);
+    border-color: var(--color-link);
+    background-color: var(--color-bg-subtle);
+  }
+
+  .theme-toggle:focus-visible {
+    outline: 2px solid var(--color-link);
+    outline-offset: 2px;
+  }
+
+  .theme-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    transition: opacity 200ms ease;
+  }
+
+  /* Show sun icon in dark mode, moon icon in light mode */
+  :global([data-theme="light"]) .theme-icon-light {
+    display: none;
+  }
+
+  :global([data-theme="light"]) .theme-icon-dark {
+    display: block;
+  }
+
+  :global([data-theme="dark"]) .theme-icon-light {
+    display: block;
+  }
+
+  :global([data-theme="dark"]) .theme-icon-dark {
+    display: none;
+  }
+
+  /* Default to light mode icons if no theme is set */
+  :global(:root:not([data-theme])) .theme-icon-light {
+    display: none;
+  }
+
+  :global(:root:not([data-theme])) .theme-icon-dark {
+    display: block;
   }
 
   .footer-copyright {
     font-size: var(--font-size-sm);
-    color: var(--color-brown-lighter);
+    color: var(--color-text-subtle);
     margin: 0;
   }
 
   .footer-name {
-    color: var(--color-brown-light);
+    color: var(--color-text-muted);
     font-weight: 600;
   }
 </style>

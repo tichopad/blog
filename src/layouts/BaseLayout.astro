@@ -16,15 +16,32 @@ A base layout for most pages.
 -->
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Metas -->
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <meta content={pageTitle} name="title" />
     <meta content={description} name="description" />
     <slot name="metas" />
+
+    <!-- Page title -->
     <title>{pageTitle}</title>
+
+    <!-- Preloads slot -->
     <slot name="preloads" />
+
+    <!-- Theme initialization script - must run before any content renders to prevent flash of incorrect theme -->
+    <script is:inline type="module">
+      const stored = localStorage.getItem("color-scheme");
+      const { matches: prefersDark } = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      );
+      const theme = stored || (prefersDark ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    </script>
+
     <!-- Fonts -->
     <link
       as="font"

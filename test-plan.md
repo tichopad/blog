@@ -1,0 +1,8 @@
+- [ ] Verify dark mode colors are visually appealing and readable (text contrast, accent colors)
+- [ ] Verify no flash of wrong theme on page load (hard refresh with Ctrl+Shift+R)
+- [ ] Change OS system preference to dark mode, open site in new tab, verify it respects system preference
+- [ ] Change OS system preference to light mode, open site in new tab, verify it respects system preference
+- [ ] Test in Firefox: toggle works, theme persists, no visual issues
+- [ ] Test in Chrome/Edge: toggle works, theme persists, no visual issues
+- [ ] Verify smooth color transitions when toggling theme (no jarring jumps)
+- [ ] Test on mobile viewport: button is accessible and works correctly

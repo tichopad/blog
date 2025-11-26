@@ -38,6 +38,7 @@ Use plain modern CSS for all styling. Strictly adhere to the custom theme.
 For client-side interactivity, use Astro's island components.
 
 - **Prefer Svelte**: Always use Svelte for interactive components
+- **Use latest Svelte**: Always use the latest version of Svelte (version 5), use **LLM-optimized documentation**: https://svelte.dev/llms.txt
 - **Simple scripts**: For simple interactivity, use plain TypeScript scripts
 - **Consult docs**: Refer to Astro's documentation for island architecture details
 

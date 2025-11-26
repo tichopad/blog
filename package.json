@@ -15,7 +15,9 @@
     "@astrojs/check": "0.9.5",
     "@astrojs/cloudflare": "12.6.10",
     "@astrojs/rss": "4.0.13",
+    "@iconify-json/lucide": "1.2.73",
     "astro": "5.15.8",
+    "astro-icon": "1.1.5",
     "typescript": "5.9.3"
   },
   "devDependencies": {
